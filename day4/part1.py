@@ -3,9 +3,7 @@ from icecream import ic
 inputTxtSmall = "inputSmall.txt"
 inputTxtBig = "inputBig.txt"
 
-global mapMatrix 
 mapMatrix = []
-global total 
 total = 0
 
 def checkSurroundings(index, index2, mapMatrix):
@@ -23,27 +21,11 @@ def checkSurroundings(index, index2, mapMatrix):
 with open(inputTxtBig, 'r') as file:
     for line in file:
         mapMatrix.append(list(line.strip()))
-
-def checkMap(mapMatrix):
     for index, row in enumerate(mapMatrix):
         for index2, cell in enumerate(row):
             if cell == '.':
                 continue
             else:
-                removable = checkSurroundings(index, index2, mapMatrix)
-                if removable == 1:
-                    mapMatrix[index][index2] = '.'
-                    global total
-                    total += 1
-    return total
-
-global previousTotal
-alterationsDone = True
-
-while alterationsDone:
-    previousTotal = total
-    alterationsDone = checkMap(mapMatrix)
-    if previousTotal == total:
-        alterationsDone = False
+                total += checkSurroundings(index, index2, mapMatrix)
 
 ic(total)
